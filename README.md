@@ -4,6 +4,16 @@ Este é um projeto para gerenciar informações do IFMG. Ele permite ao usuário
 
 <br>
 
+# Imagens do APP ⭐
+
+![descrição da imagem](/imagens/loading.jpeg)
+![descrição da imagem](/imagens/login.jpeg)
+![descrição da imagem](/imagens/perfil.jpeg)
+![descrição da imagem](/imagens/historico.jpeg)
+![descrição da imagem](/imagens/notas.jpeg)
+
+<br>
+
 # Instalação do Projeto 🚀
 ```bash
 # Clonando o repositório
