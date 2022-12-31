@@ -1,4 +1,26 @@
-# Gua útil para compilar/formatar o APP
+# MeuIFMG APP em React-Native
+
+Este é um projeto para gerenciar informações do IFMG. Ele permite ao usuário consultar notícias, horários de aulas, eventos e outras informações úteis sobre o instituto.
+
+<br>
+
+# Instalação do Projeto 🚀
+```bash
+# Clonando o repositório
+git clone https://github.com/LearXD/MeuIFMG
+
+# Acessando pasta
+cd MeuIFMG
+
+# Instalando dependências
+npm install
+
+# Iniciar o servidor Metro Bundler
+npm start
+```
+
+
+# Guia útil para compilar/formatar o APP
 
 ## Mudar o package do app
 
