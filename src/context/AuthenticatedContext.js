@@ -1,13 +1,15 @@
 
 import { createContext, useReducer } from "react";
+import { Modal } from "react-native";
+import LoadingScreen from "../components/LoadingScreen";
 
 const context = createContext({})
 
 export const AuthenticatedProvider = (props) => {
     const data = props.route.params;
 
-    const reducer = (state) => {
-        return state;
+    const reducer = (oldState, newState) => {
+        return newState || oldState;
     }
 
     const [state, dispatch] = useReducer(reducer, {
@@ -18,12 +20,32 @@ export const AuthenticatedProvider = (props) => {
             registration: data?.registration || undefined,
             name: undefined
         },
-        historic: {},
-        subjects: []
+        loading: false,
+        loadingMessage: "Carregando..."
     })
 
+    const setLoading = (message) => {
+        dispatch({
+            ...state,
+            loading: true,
+            loadingMessage: message
+        })
+
+        return () => {
+            dispatch({
+                ...state,
+                loading: false
+            })
+        }
+    }
+
     return (
-        <context.Provider value={{state, dispatch}}>
+        <context.Provider value={{state, dispatch, setLoading}}>
+
+            <Modal transparent={true} visible={state.loading}>
+                <LoadingScreen message={state.loadingMessage} />
+            </Modal>
+
             { props.children }
         </context.Provider>
     )

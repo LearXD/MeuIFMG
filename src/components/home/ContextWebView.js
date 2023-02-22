@@ -8,12 +8,13 @@ const url = "https://meu.ifmg.edu.br/EducaMobile/Educacional/EduContexto/GetCont
 export default ({ onEndSession }) => {
 
     const [loading, setLoading] = useState(true)
+    
     let webView;
 
     return (
         <View style={{ flex: 1, backgroundColor: '#fdfffd' }}>
             <View style={{ flex: 1 }}></View>
-            <View style={{ flex: 2 }}>
+            <View style={{ height: '60%' }}>
                 <WebView
                     ref={(instance) => webView = instance}
                     scalesPageToFit={false}
@@ -22,6 +23,8 @@ export default ({ onEndSession }) => {
                     }}
                     onLoadEnd={() => {
                         webView.injectJavaScript(`
+
+                        document.getElementsByClassName("ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext ui-icon-nodisc ui-btn-right")[0].remove()
                         if(!document.querySelector('#cbSalvarContexto').clicked) {
                             document.querySelector('#cbSalvarContexto').clicked = true
                             document.querySelector('#cbSalvarContexto').click()

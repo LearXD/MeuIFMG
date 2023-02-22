@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
-import { View, Text, StyleSheet, FlatList, ScrollView, Modal } from 'react-native'
+import { View, Text, StyleSheet, FlatList, ScrollView, Modal, Alert, BackHandler, ToastAndroid } from 'react-native'
 import Activity from '../../components/assessments/Activity'
 import Dropdown from '../../components/assessments/Dropdown'
 import CustomHeader from '../../components/headers/CustomHeader'
@@ -8,6 +8,10 @@ import { getAcivities, getSubjects } from '../../utils/RequestManager'
 import AuthenticatedContext from '../../context/AuthenticatedContext'
 
 import LoadingScreen from '../../components/LoadingScreen'
+import ContextWebView from '../../components/home/ContextWebView'
+import CookieManager from '@react-native-cookies/cookies'
+
+import CustomButton from '../../components/login/CustomButton'
 
 const styles = StyleSheet.create({
     contents: {
@@ -22,55 +26,108 @@ const styles = StyleSheet.create({
 })
 
 
-export default ({navigation}) => {
+export default ({ navigation }) => {
 
-    const { state  } = useContext(AuthenticatedContext)
+    const { state, setLoading } = useContext(AuthenticatedContext)
 
     const [subjects, setSubjects] = useState([])
     const [activities, setActivities] = useState([])
 
-    const [isLoading, setLoading] = useState(false);
     const [isActivitiesLoading, setActivitiesLoading] = useState(false);
-
     const [loadingMessage, setLoadingMessage] = useState("Carregando...");
+
+    const [showWebView, setShowWebView] = useState(false)
 
     const reloadActivities = async (data) => {
         setLoadingMessage("Carregando atividades...");
         setActivitiesLoading(true);
-        const response = await getAcivities(state.token, data.id);
-        setActivities(response.data)
-        setActivitiesLoading(false);
+
+        getAcivities(state.token, data.id)
+        .then(response => {
+            setActivities(response.data)
+            setActivitiesLoading(false);
+        })
+        .catch(error => {
+            Alert.alert("Erro", "Erro: " + error.message)
+        });
+    }
+
+    const loadSubjects = () => {
+        const cancelLoading = setLoading("Carregando Matérias...");
+        getSubjects(state.token)
+            .then(async (response) => {
+                cancelLoading();
+                response.data.map((subject) => {
+                    const name = subject.name.split("-");
+                    name.shift();
+                    subject.name = name.join("-")
+                    return subject
+                })
+                setSubjects(response.data)
+                
+            }).catch((error) => {
+                switch (response.status) {
+                    case 409:
+                        CookieManager.setFromResponse('https://meu.ifmg.edu.br', state.token)
+                            .then(() => { setShowWebView(true) })
+                        return;
+                }
+                Alert.alert("❌ Erro Encontrado!", error.message, [
+                    {
+                        text: 'OK, SAIR.',
+                        onPress: () => { BackHandler.exitApp() }
+                    }
+                ])
+            })
     }
 
     useEffect(() => {
-        setLoading(true);
-        setLoadingMessage("Carregando Matérias...")
-        getSubjects(state.token)
-            .then(response => {
-                setLoading(false);
-                setSubjects(response.data)
-            })
+        loadSubjects();
     }, [])
 
     return (
         <>
-             <CustomHeader
+            <Modal visible={showWebView}>
+                <ContextWebView token={state.token} onEndSession={() => {
+                    setShowWebView(false)
+                    loadSubjects();
+                }} />
+            </Modal>
+
+            <CustomHeader
                 leftButton="chevron-back-outline"
                 onLeftButtonClick={() => navigation.goBack()}
                 title="SUAS NOTAS" />
-            <Modal visible={isLoading}>
-                <LoadingScreen message={loadingMessage}/>
-            </Modal>
+
             <View
                 style={{ flex: 1, alignItems: 'center', paddingVertical: 10 }}
             >
 
+                <CustomButton
+                    style={{
+                        borderRadius: 10,
+                        borderWidth: 1,
+                        borderColor: Colors.primary,
+                        marginBottom: 10,
+                        width: '90%',
+                        padding: 5,
+                    }}
+                    onClick={() => {
+                        CookieManager.setFromResponse('https://meu.ifmg.edu.br', state.token)
+                            .then(() => { setShowWebView(true) })
+                            .catch((e) => Alert.alert("Erro", e.message))
+                    }}
+                    name={"ALTERAR PERIODO LETIVO"}
+                />
+
                 <Dropdown
+                    nothingSelectedMessage="Clique para selecionar uma matéria"
                     options={subjects}
                     canOpen={!isActivitiesLoading}
                     onSelect={(data) => {
                         reloadActivities(data)
                     }} />
+
 
                 <View style={styles.contents}>
 

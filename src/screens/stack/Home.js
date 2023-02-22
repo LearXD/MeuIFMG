@@ -5,40 +5,32 @@ import OptionsContainer from "../../components/home/OptionsContainer"
 import ProfileContainer from "../../components/home/ProfileContainer"
 import Colors from "../../utils/Colors"
 import AuthenticatedContext from '../../context/AuthenticatedContext'
-import LoadingScreen from "../../components/LoadingScreen"
-import axios from "axios"
-import { getRoute } from '../../utils/RouteManager';
 import Background from "../../components/Background"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { getProfile } from "../../utils/RequestManager"
+import { goBackToLogin } from "../../utils/Utils"
 
-const loadUserData = ({ state, dispatch }, { setLoadingMessage, setLoading }) => {
-    setLoadingMessage("Carregando informações de usuário...")
-    axios({
-        url: getRoute('profile'),
-        method: 'GET',
-        headers: { token: state.token },
-        validateStatus: (status) => ((status >= 200 && status < 303) || status === 401)
-    }).then(
-        ({ data, status }) => {
-            if (status !== 401) {
-                state.profile = {
-                    ...state.profile,
-                    name: data.name,
-                    image: data.image
-                }
-                dispatch(state)
-                setLoading(false)
-                return;
+const loadUserData = ({ state, dispatch }, setLoading, navigation) => {
+    const cancelLoading = setLoading("Carregando informações de usuário...")
+
+    getProfile(state.token).then(response => {
+        const acceptedStatuses = [200, 301];
+        if (acceptedStatuses.includes(response.status)) {
+
+            state.profile = {
+                ...state.profile,
+                name: response.data.name,
+                image: response.data.image
             }
-            Alert.alert("Erro ao fazer Login...", data.error.message, [
-                {
-                    text: 'OK, SAIR.',
-                    onPress: () => { BackHandler.exitApp() }
-                }
-            ])
-        }
-    ).catch(e => {
-        Alert.alert("Erro desconhecido!", e.message, [
+
+            dispatch(state)
+            cancelLoading()
+            return;
+        } 
+        throw new Error("Erro desconhecido. Status " + response.status)
+    }).catch(error => {
+
+        Alert.alert("❌ Erro Encontrado!", error.message, [
             {
                 text: 'OK, SAIR.',
                 onPress: () => { BackHandler.exitApp() }
@@ -62,27 +54,16 @@ const styles = StyleSheet.create({
     }
 })
 
-let loadedUserData = false
-
 export default ({ navigation }) => {
 
-    const { state, dispatch } = useContext(AuthenticatedContext)
-    const [loading, setLoading] = useState(true)
-    const [loadingMessage, setLoadingMessage] = useState("Carregando...");
+    const { state, dispatch, setLoading} = useContext(AuthenticatedContext)
 
     useEffect(() => {
-        loadUserData({ state, dispatch }, { setLoading, setLoadingMessage })
+        loadUserData({ state, dispatch }, setLoading, navigation)
     }, [])
 
     return (
         <Background style={{ flex: 1 }}>
-
-            <Modal 
-            visible={loading}
-            transparent={true}
-            animationType="fade">
-                <LoadingScreen message={loadingMessage} />
-            </Modal>
 
             <CustomHeader
                 leftButton="exit-outline"
@@ -93,15 +74,13 @@ export default ({ navigation }) => {
                             {
                                 text: 'SIM',
                                 onPress: () => {
-                                    loadedUserData = false
-                                    AsyncStorage.getItem('registration', (err, res) => {
+                                    AsyncStorage.getItem('registration', (err) => {
                                         if (!err) {
                                             AsyncStorage.removeItem('registration')
                                             AsyncStorage.removeItem('password')
                                         }
                                     })
-                                    state.navigation.pop()
-                                    state.navigation.navigate('Login')
+                                    goBackToLogin(state.navigation)
                                 }
                             },
                             {
@@ -125,6 +104,13 @@ export default ({ navigation }) => {
                         buttonsBackground={Colors.primary}
                         buttons={[
                             {
+                                name: 'Sua Situação',
+                                description: 'Veja um resumo detalhado sobre sua situação academica...',
+                                backgroundColor: Colors.primary,
+                                icon: 'happy-outline',
+                                onClick: () => navigation.navigate("Situation")
+                            },
+                            {
                                 name: 'Histórico',
                                 description: 'Veja suas Notas, Faltas e Carga Horária de cada matéria em todos os anos letivos disponíveis...',
                                 backgroundColor: Colors.primary,
@@ -138,14 +124,7 @@ export default ({ navigation }) => {
                                 icon: 'document-text-outline',
                                 onClick: () => navigation.navigate("Activities")
                             },
-                            {
-                                name: 'Notas e Faltas (EM BREVE)',
-                                inactive: true,
-                                description: 'Veja suas notas e faltas do ano letivo todo em matérias específicas...',
-                                backgroundColor: Colors.primary,
-                                icon: 'documents-outline',
-                                //onClick: () => navigation.navigate("Historic")
-                            },
+                            
                         ]} />
                 </View>
 

@@ -1,4 +1,6 @@
-import { Image, StyleSheet, Text, View } from "react-native"
+import { Image, Modal, StyleSheet, Text, TouchableWithoutFeedback, View} from "react-native"
+import { useState } from "react"
+import ImageViewModal from './ImageViewModal'
 import Colors from "../../utils/Colors"
 
 const styles = StyleSheet.create({
@@ -37,18 +39,40 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         flexWrap: 'wrap'
     },
-
+    viewImage: {
+        height: '60%',
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
 })
 
 export default ({image, name, subscription, style}) => {
+
+    const [viewImageState, setViewImage] = useState(false);
+
+    const toggleViewImage = () => {
+        setViewImage(!viewImageState)
+    }
+
+    const profileImage = image && (image.startsWith('data:image') ? ({uri: image }) : require('../../../assets/images/profile.png'))
+
     return (
         <View style={[styles.container, style]}>
+            <Modal 
+            transparent={true}
+            style={styles.viewImage}
+            visible={viewImageState}>
+                <ImageViewModal 
+                toggleViewImage={toggleViewImage}
+                image={profileImage} />
+            </Modal>
             <View style={styles.imageContainer}>
-                <Image 
-                style={styles.image} 
-                source={
-                    image && (image.startsWith('data:image') ? ({uri: image }) : require('../../../assets/images/profile.png'))
-                    }/> 
+                <TouchableWithoutFeedback onPress={toggleViewImage}>
+                    <Image 
+                    style={styles.image} 
+                    source={profileImage}/> 
+                </TouchableWithoutFeedback>
+                
             </View>
             <View style={styles.textContainer}>
                 <Text style={styles.title}>{name ?? "Carregando"}</Text>

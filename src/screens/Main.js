@@ -21,23 +21,30 @@ export default () => {
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <NavigationContainer>
-                <Navigator initialRouteName={Dev.env.modes[Dev.env.mode].initialScreen}  screenOptions={{
+                <Navigator initialRouteName={Dev.env.modes[Dev.env.mode].initialScreen}  
+                screenOptions={{
                     headerShown: false,
                 }}>
-                    <Screen name="Loading" component={Loading}/>
 
                     <Screen 
-                    name="Login" 
-                    component={Login} options={{
-                        animation: 'fade'
-                    }} />
+                        name="Loading" 
+                        component={Loading}
+                    />
 
                     <Screen 
-                    name="Authenticated" 
-                    component={Authenticated}
-                    options={{
-                        animation: 'slide_from_right'
-                    }}/>
+                        name="Login" 
+                        component={Login} options={{
+                            animation: 'simple_push' // APARECER "EXPLODINDO"
+                        }} 
+                    />
+
+                    <Screen 
+                        name="Authenticated" 
+                        component={Authenticated}
+                        options={{
+                            animation: 'slide_from_right' // APARECER DESLIZANDO DA DIREITA
+                        }}
+                    />
 
                     <Screen name="Teste" component={Test}/>
 

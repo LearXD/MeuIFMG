@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     }
 })
 
-export default ({ options, style, onSelect, keyExtractor, canOpen }) => {
+export default ({ options, style, onSelect, keyExtractor, canOpen, nothingSelectedMessage}) => {
 
     const [selected, setSelected] = useState(undefined)
     const [open, setOpen] = useState(false)
@@ -75,7 +75,7 @@ export default ({ options, style, onSelect, keyExtractor, canOpen }) => {
                                 justifyContent: 'center'
                             }}>
                             <Text style={{fontWeight: 'bold'}}>{
-                                selected != undefined ? (`Selecionado: ${options[selected].name}`) : "Nada selecionado!"
+                                selected != undefined ? (`Selecionado: ${options[selected].name}`) : (nothingSelectedMessage || "Nada selecionado!")
                             }</Text>
                         </View>
 

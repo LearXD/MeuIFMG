@@ -56,7 +56,7 @@ const checkSever = (navigation, { setMessage }) => {
         }
         navigation.navigate('Login')
       })
-      
+
     }
     throw new Error();
   }).catch((error) => {
@@ -67,16 +67,14 @@ const checkSever = (navigation, { setMessage }) => {
         {
           text: 'RECONECTAR',
           onPress: () => {
-            checkSever(navigation);
+            checkSever(navigation, {setMessage});
           },
-          style: 'default'
         },
         {
           text: 'SAIR',
           onPress: () => {
             BackHandler.exitApp();
           },
-          style: 'cancel'
         }
       ])
   })
@@ -89,18 +87,17 @@ export default (props) => {
 
   useEffect(() => {
 
-    setTimeout(() => {
+    registerBackPressHandler();
+    //setTimeout(() => {
       setMessage('Conectando com o servidor...\n' + endpoint)
       checkSever(navigation, { message, setMessage })
-    }, 1000)
-
-    registerBackPressHandler();
+    //}, 1000)
 
   }, [])
 
   return (
     <View style={styles.container}>
-      <Background style={styles.container}>
+      {/* <Background style={styles.container}> */}
         <View style={{ flex: 2, alignItems: 'center', justifyContent: 'center' }}>
           <Image style={styles.logo} source={require('../../../assets/images/if_logo.jpg')} />
           <Text style={styles.title}>Meu IFMG Mobile</Text>
@@ -109,7 +106,7 @@ export default (props) => {
           <Text style={styles.loadingTitle}>{message}</Text>
           <ActivityIndicator style={styles.activityLoading} size={60} color="#28983d" />
         </View>
-      </Background>
+      {/* </Background> */}
 
 
     </View>

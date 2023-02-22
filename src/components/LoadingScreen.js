@@ -1,18 +1,18 @@
 import { ActivityIndicator, Modal, StyleSheet, View, Text, Dimensions } from "react-native"
 import Colors from "../utils/Colors"
 
-const screenHeight = Dimensions.get('screen').height
-const screenWidth = Dimensions.get('screen').width
+const screenHeight = Dimensions.get('window').height
+const screenWidth = Dimensions.get('window').width
 
 const styles = StyleSheet.create({
     container: {
         position: 'absolute',
         alignItems: 'center',
         justifyContent: 'center',
-        height: screenHeight,
-        width: screenWidth,
+        height: '100%',
+        width: '100%',
+        backgroundColor: 'rgba(0,0,0,0.6)',
         padding: 10,
-        //backgroundColor: '#fdfffd',
         opacity: 1
     },
     text: {

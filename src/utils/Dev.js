@@ -3,8 +3,8 @@ export default {
         mode: 'production',
         modes: {
             dev: {
-                initialScreen: 'Teste',
-                authInitialScreen: 'Home'
+                initialScreen: 'Authenticated',
+                authInitialScreen: 'Situation'
             },
             production: {
                 initialScreen: 'Loading',
