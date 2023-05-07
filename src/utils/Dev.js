@@ -3,7 +3,7 @@ export default {
         mode: 'production',
         modes: {
             dev: {
-                initialScreen: 'Authenticated',
+                initialScreen: 'Loading',
                 authInitialScreen: 'Situation'
             },
             production: {

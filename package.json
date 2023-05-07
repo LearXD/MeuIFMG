@@ -16,6 +16,7 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "start-clear": "npm start -- --reset-cache",
+    "load-assets": "npx react-native-asset",
     "test": "jest",
     "lint": "eslint ."
   },
@@ -25,6 +26,7 @@
     "@react-navigation/native": "^6.1.1",
     "@react-navigation/native-stack": "^6.9.7",
     "axios": "^1.2.1",
+    "lottie-react-native": "^5.1.5",
     "react": "18.1.0",
     "react-native": "0.70.6",
     "react-native-linear-gradient": "^2.6.2",

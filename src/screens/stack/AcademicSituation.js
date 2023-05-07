@@ -30,6 +30,12 @@ export default({ navigation }) => {
     const loadData = () => {
         const cancelLoading = setLoading("Carregando situacao academica...")
         getSubjects(state.token).then((response) => {
+            response.data.map((subject) => {
+                const name = subject.name.split("-");
+                name.shift();
+                subject.name = name.join("-")
+                return subject
+            })
             setData(response.data)
             cancelLoading();
         }).catch(() => {
@@ -77,8 +83,9 @@ export default({ navigation }) => {
                             .then(() => { setShowWebView(true) })
                             .catch((e) => Alert.alert("Erro", e.message))
                     }}
-                    name={"ALTERAR PERIODO LETIVO"}
+                    name="ALTERAR PERIODO LETIVO"
                 />
+
                 <FlatList
                     data={data}
                     style={{

@@ -1,7 +1,8 @@
 
 import { createContext, useReducer } from "react";
-import { Modal } from "react-native";
+import { Modal, StatusBar } from "react-native";
 import LoadingScreen from "../components/LoadingScreen";
+import Colors from "../utils/Colors";
 
 const context = createContext({})
 
@@ -30,8 +31,11 @@ export const AuthenticatedProvider = (props) => {
             loading: true,
             loadingMessage: message
         })
+        // GET STATUS BAR COLOR
+        StatusBar.setBackgroundColor("#113e18");
 
         return () => {
+            StatusBar.setBackgroundColor(Colors.primary);
             dispatch({
                 ...state,
                 loading: false
@@ -47,6 +51,7 @@ export const AuthenticatedProvider = (props) => {
             </Modal>
 
             { props.children }
+            
         </context.Provider>
     )
 }

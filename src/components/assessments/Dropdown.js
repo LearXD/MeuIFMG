@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     flatList: {
         backgroundColor: "#eff2ef",
         width: '100%',
-        zIndex: 2,
+        zIndex: 2, // Para não ficar por baixo do header
         height: windowHeight * 0.5,
         position: 'absolute',
         bottom: (-(windowHeight * 0.5)),
@@ -67,7 +67,6 @@ export default ({ options, style, onSelect, keyExtractor, canOpen, nothingSelect
                         style={{
                             flexDirection: 'row',
                         }}>
-
                         <View
                             style={{
                                 flex: 9,
@@ -98,6 +97,7 @@ export default ({ options, style, onSelect, keyExtractor, canOpen, nothingSelect
                 <FlatList
                     style={[styles.flatList]}
                     data={options}
+                    showsVerticalScrollIndicator={false}
                     keyExtractor={(data, i) => (keyExtractor ? keyExtractor(data, i) : i)}
                     renderItem={({item, index}) => {
                         return gradItem({

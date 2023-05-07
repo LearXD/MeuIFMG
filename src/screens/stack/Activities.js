@@ -132,6 +132,7 @@ export default ({ navigation }) => {
                 <View style={styles.contents}>
 
                     <FlatList
+                        showsVerticalScrollIndicator={false}
                         data={activities}
                         keyExtractor={(_, i) => i}
                         renderItem={({ item, index }) => {
