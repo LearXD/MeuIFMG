@@ -1,10 +1,9 @@
 # MeuIFMG Mobile
-
-### Um projeto desenvolvido com o intuito de facilitar e melhorar o acesso de notas/informações dos alunos de todos os Institutos Federais de Minas Gerais
+<center>Um projeto desenvolvido com o intuito de facilitar e melhorar o acesso de notas/informações dos alunos de todos os Institutos Federais de Minas Gerais</center>
 
 # Creditos
 
-## Projeto de Pesquisa desenvolvido por:
+Projeto de Pesquisa desenvolvido por:
 
 | Nome                          | Função                  |
 |-------------------------------|------------------------ |

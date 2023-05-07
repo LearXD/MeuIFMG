@@ -4,7 +4,7 @@ import { SafeAreaView, StatusBar, StatusBarStyle } from "react-native"
 import SplashScreen from "./others/SplashScreen";
 import theme from "../utils/theme";
 import LoginScreen from "./auth/LoginScreen";
-import changeNavigationBarColor, { hideNavigationBar } from "react-native-navigation-bar-color";
+import changeNavigationBarColor from "react-native-navigation-bar-color";
 import { useEffect } from "react";
 import AuthenticatedNavigation from "./auth/AuthenticatedNavigator";
 

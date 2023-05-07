@@ -1,4 +1,4 @@
-import Api from './rest';
+import Api from './axios';
 
 export const login = (registration: string, password: string) => {
   return Api.post('/login', { registration, password })

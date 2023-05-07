@@ -2,15 +2,17 @@ import { View, Text, StyleSheet, useWindowDimensions, KeyboardAvoidingView } fro
 import React, { useEffect, useState } from 'react'
 import theme from '../../utils/theme';
 
+import AsyncStorge from '@react-native-async-storage/async-storage';
+
 import Logo from '../../assets/svg/logo.svg'
 import Input from '../../components/screens/login/Input';
 import Button from '../../components/screens/login/Button';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useRoute } from '@react-navigation/native';
-import { login } from '../../utils/api/if';
+
+import { login } from '../../utils/api/api';
 import { StatusBar } from 'react-native';
 import { StatusBarStyle, ToastAndroid } from 'react-native';
-import AuthenticatedNavigation from './AuthenticatedNavigator';
+import { z } from 'zod';
 
 const styles = StyleSheet.create({
   container: {
@@ -56,27 +58,62 @@ export default function LoginScreen({
 
   const { height } = useWindowDimensions();
 
-  const [registration, setRegistration] = useState('0063343')
-  const [password, setPassword] = useState("@Leugimlucia1981")
+  const [registration, setRegistration] = useState('')
+  const [password, setPassword] = useState("")
+
+  useEffect(() => {
+    AsyncStorge.multiGet(['@registration', '@password'])
+      .then((value) => {
+        const [[_1, registration], [_2, password]] = value;
+        if (registration && password) {
+          setRegistration(registration);
+          setPassword(password);
+        }
+      })
+  }, [])
 
   const handleLogin = async (cancelLoading: CallableFunction) => {
     try {
-      const loginResponse = await login(registration, password);
 
-      if (loginResponse.status === 401) {
-        ToastAndroid.show('Usuário ou senha incorretos!', ToastAndroid.SHORT);
+      const validate: any = z.object({
+        registration: z.string().min(7, 'O R.A deve conter 7 digitos').max(7, 'O R.A deve conter 7 digitos'),
+        password: z.string().min(3, 'A senha deve conter no minimo 3 digitos'),
+      })
+        .safeParse({
+          registration,
+          password
+        })
+
+      if (!validate.success) {
+        cancelLoading();
+        ToastAndroid.show(validate.error.errors[0].message, ToastAndroid.SHORT);
         return;
       }
 
-      console.log(loginResponse.data.token)
+      const loginResponse = await login(registration, password);
 
-      navigation.reset({
-        index: 1,
-        routes: [{
-          name: 'Authenticated',
-          params: { token: loginResponse.data.token }
-        }],
-      });
+      if (loginResponse) {
+        if (loginResponse.status === 401) {
+          cancelLoading();
+          ToastAndroid.show('Usuário ou senha incorretos!', ToastAndroid.SHORT);
+          return;
+        }
+
+        console.log(loginResponse.data.token)
+
+        await AsyncStorge.multiSet([
+          ['@registration', registration],
+          ['@password', password]
+        ])
+
+        navigation.reset({
+          index: 1,
+          routes: [{
+            name: 'Authenticated',
+            params: { token: loginResponse.data.token }
+          }],
+        });
+      }
 
     } catch (error) {
       console.error(error)

@@ -7,7 +7,7 @@ import FilterList from '../../components/screens/grades/FilterList';
 import SubjectHistoryModal from '../../components/screens/grades/SubjectHistoryModal';
 import Header from '../../components/screens/Header';
 
-import { listGrades } from '../../utils/api/if';
+import { listGrades } from '../../utils/api/api';
 import AuthenticatedContext from '../../contexts/AuthenticatedContext';
 
 const styles = StyleSheet.create({

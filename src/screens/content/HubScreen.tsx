@@ -5,8 +5,9 @@ import Header from '../../components/screens/Header';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Picture from '../../components/screens/home/Picture';
 import AuthenticatedContext from '../../contexts/AuthenticatedContext';
-import { profile } from '../../utils/api/if';
+import { profile } from '../../utils/api/api';
 import OptionButton from '../../components/screens/home/OptionButton';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const styles = StyleSheet.create({
   container: {
@@ -73,7 +74,8 @@ export default function HubScreen({
           Alert.alert('Sair', 'Deseja realmente sair?', [
             { text: 'Não', style: 'cancel' },
             {
-              text: 'Sim', onPress: () => {
+              text: 'Sim', onPress: async () => {
+                await AsyncStorage.multiRemove(['@registration', '@password'])
                 mainNavigation.reset({
                   index: 1,
                   routes: [{
