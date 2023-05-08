@@ -1,95 +1,99 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native'
+import React from 'react'
 import theme from '../../../utils/theme'
 
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import SubjectSectionList from './SubjectsSectionList'
+import SearchList from './SearchList'
+import { useEffect } from 'react';
+
+const { height, width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center',
+    height,
+    width,
     justifyContent: 'center',
-    backgroundColor: 'rgba(0,0,0,0.8)'
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    alignItems: 'center'
   },
   modal: {
     width: '85%',
     height: '95%',
-    backgroundColor: '#151515',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 5,
+    backgroundColor: theme.background,
+    borderColor: theme.primary,
     borderWidth: 1,
-    borderColor: theme.primary
+    borderRadius: 5
   }
 })
 
 interface Props {
-  subject: string,
-  closeModal: () => void,
-  sections: any
+  title: string;
+  data: any;
+  closeModal: () => void;
 }
 
-export default function SubjectHistoryModal({
-  subject,
-  closeModal,
-  sections
+export default function ReportModal({
+  title,
+  data,
+  closeModal
 }: Props) {
+
+  const [subjects, setSubjects] = React.useState<any[]>([])
+
+  useEffect(() => {
+    setSubjects(data.subjects)
+  }, [data])
 
   return (
     <View style={styles.container}>
       <View style={styles.modal}>
         <View style={{
-          padding: 10,
           flexDirection: 'row',
           width: '100%',
+          padding: 10,
           gap: 10
         }}>
           <View style={{
             flex: 1,
-            borderRadius: 5,
-            borderWidth: 1,
             borderColor: theme.primary,
-            alignItems: 'center',
+            borderWidth: 1,
+            borderRadius: 5,
             justifyContent: 'center',
+            alignItems: 'center'
           }}>
             <TouchableOpacity
-              onPress={closeModal}
-            >
+              onPress={closeModal}>
               <Ionicons
                 name="close-outline"
                 size={25}
                 color={theme.text}
               />
             </TouchableOpacity>
+
           </View>
           <View style={{
             flex: 5,
-            borderRadius: 5,
-            borderWidth: 1,
             borderColor: theme.primary,
-            alignItems: 'center',
+            borderWidth: 1,
+            borderRadius: 5,
             justifyContent: 'center',
+            alignItems: 'center',
             paddingVertical: 10
           }}>
             <Text style={{
               color: theme.text,
-              fontSize: 12,
-              fontFamily: 'Montserrat-Bold',
-              textAlign: 'center'
             }}>
-              {subject ?? 'Não encontrado'}
+              {title.replace(/_/g, ' ')}
             </Text>
           </View>
         </View>
         <View style={{
-          flex: 1,
-          width: '100%',
-          padding: 10,
+          flex: 1
         }}>
-          <SubjectSectionList sections={sections} />
+          <SearchList data={subjects} />
         </View>
       </View>
     </View>
-  )
+  );
 }
 

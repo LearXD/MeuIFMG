@@ -1,5 +1,5 @@
 import { TouchableOpacity, Text, StyleSheet, ActivityIndicator } from 'react-native'
-import React, { useState } from 'react'
+import { useState } from 'react';
 import theme from '../../../utils/theme';
 
 const style = StyleSheet.create({

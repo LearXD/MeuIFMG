@@ -1,5 +1,4 @@
-import { StyleSheet, View, Text, SectionListData, SectionList } from 'react-native'
-import React from 'react'
+import { StyleSheet, View, Text, SectionList } from 'react-native'
 import SubjectItem from './SubjectItem';
 import theme from '../../../utils/theme';
 

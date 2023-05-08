@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TextInput, Pressable } from 'react-native'
-import React, { useState } from 'react'
+import { useState } from 'react';
 import theme from '../../../utils/theme';
 
 import Ionicons from 'react-native-vector-icons/Ionicons'

@@ -38,6 +38,8 @@ export default function GradesScreen({
 
   const [modalSubject, setModalSubject] = useState<string>('')
 
+  const [achievement, setAchievement] = useState<number>(0)
+
   const getSubjectData = (subject: string) => {
     const [result] = data.filter((item: any) => item.subject === subject);
     if (!result) return []
@@ -55,10 +57,14 @@ export default function GradesScreen({
       const stopLoading = loading.start('Carregando notas...');
       const grades: any = await listGrades(token);
 
+      let totalActivities = 0;
+      let underAverageActivities = 0;
+
       const newData = grades.map((subject: any, i: number) => {
 
         const info = {
           underAverage: 0,
+          activities: 0,
         }
 
         const regex = /Recupera[cç]ã?o/i;
@@ -71,6 +77,7 @@ export default function GradesScreen({
             if (regex.test(activity.name)) {
               continue;
             }
+            info.activities++
             const fixedGrade = parseFloat(activity.note.replace(/,/g, "."))
             const fixedValue = parseFloat(activity.value.replace(/,/g, "."))
             if (fixedGrade < (fixedValue * 0.6)) {
@@ -79,14 +86,21 @@ export default function GradesScreen({
           }
         }
 
+        totalActivities += info.activities
+        underAverageActivities += info.underAverage
+
         return {
           ...subject,
           info
         }
-
       })
 
       stopLoading();
+
+      if (totalActivities) {
+        setAchievement((totalActivities - underAverageActivities) / totalActivities)
+      }
+
       setData(newData)
     })()
   }, [])
@@ -114,9 +128,18 @@ export default function GradesScreen({
 
       <View style={styles.contents}>
         <SummaryView
-          icon='smile-beam'
+          icon={
+            achievement >= 0.8 ? 'smile-beam' : (
+              achievement >= 0.6 ? 'smile' : 'meh'
+            )
+          }
           title='Resumo'
-          subtitle='Parabéns! Suas notas estão muito boas. Continue assim...'
+          subtitle={
+            (achievement >= 0.8 ? 'Parabéns, seu aproveitamento está otimo. Continue assim!' : (
+              achievement >= 0.6 ? 'Você pode melhorar, mas não está tão ruim assim!' :
+                'Você precisa melhorar, mas não desanime!'
+            )) + `\n\nAproveitamento de: ${Math.round(achievement * 100)}%`
+          }
         />
         <FilterList
           sectionName={`Matérias (${data.length})`}

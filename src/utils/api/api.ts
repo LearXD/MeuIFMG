@@ -37,3 +37,7 @@ export const listGrades = async (token: string) => {
 
   return Promise.all(result)
 }
+
+export const reports = (token: string) => {
+  return Api.get('/historic', { headers: { token } })
+}

@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import theme from '../../../utils/theme';
@@ -56,8 +56,6 @@ export default function FilterList({
     })
     setData(filterData);
   }, [alphabetical])
-
-
 
   return (
     <View style={styles.container}>

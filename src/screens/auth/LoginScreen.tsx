@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, useWindowDimensions, KeyboardAvoidingView } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import theme from '../../utils/theme';
 
 import AsyncStorge from '@react-native-async-storage/async-storage';
@@ -13,6 +13,7 @@ import { login } from '../../utils/api/api';
 import { StatusBar } from 'react-native';
 import { StatusBarStyle, ToastAndroid } from 'react-native';
 import { z } from 'zod';
+import CookieManager from '@react-native-cookies/cookies';
 
 const styles = StyleSheet.create({
   container: {
@@ -106,6 +107,9 @@ export default function LoginScreen({
           ['@password', password]
         ])
 
+        await CookieManager.clearAll();
+        await CookieManager.setFromResponse('https://meu.ifmg.edu.br', loginResponse.data.token)
+
         navigation.reset({
           index: 1,
           routes: [{
@@ -120,7 +124,6 @@ export default function LoginScreen({
     }
     cancelLoading();
   }
-
 
   return (
     <KeyboardAvoidingView

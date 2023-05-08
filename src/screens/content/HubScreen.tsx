@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, Alert } from 'react-native'
-import React, { useContext, useEffect, useState } from 'react'
+import { View, Text, StyleSheet, Alert, BackHandler, Modal } from 'react-native'
+import { useContext, useEffect, useState } from 'react';
 import theme from '../../utils/theme';
 import Header from '../../components/screens/Header';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -8,6 +8,7 @@ import AuthenticatedContext from '../../contexts/AuthenticatedContext';
 import { profile } from '../../utils/api/api';
 import OptionButton from '../../components/screens/home/OptionButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ChangeContext from '../../components/screens/home/ChangeContext';
 
 const styles = StyleSheet.create({
   container: {
@@ -28,6 +29,7 @@ interface Props {
     Grades: undefined,
     Hub: undefined,
     Login: undefined,
+    Reports: undefined,
   }>
 }
 
@@ -40,23 +42,32 @@ export default function HubScreen({
   const [userImage, setUserImage] = useState('')
   const [userName, setUserName] = useState('Carregando...')
 
+  const [contextModalIsVisible, setContextModalIsVisible] = useState(false)
 
   useEffect(() => {
     if (token) {
+      BackHandler.addEventListener('hardwareBackPress', () => {
+        if (navigation.canGoBack()) {
+          navigation.goBack();
+          return true;
+        }
+        Alert.alert('Sair', 'Deseja realmente sair?', [
+          { text: 'Não', style: 'cancel' },
+          { text: 'Sim', onPress: () => BackHandler.exitApp() }
+        ])
+        return true;
+      });
+
       const stopLoading = loading.start('Carregando perfil...');
       (async () => {
-        try {
-          const response: any = await profile(token);
 
-          if (response) {
-            setUserImage(response.data.image)
-            setUserName(response.data.name)
-            stopLoading();
-            return;
-          }
+        const response = await profile(token);
 
-        } catch (error) {
-          console.log(error)
+        if (response) {
+          setUserImage(response.data.image)
+          setUserName(response.data.name)
+          stopLoading();
+          return;
         }
 
       })()
@@ -66,8 +77,16 @@ export default function HubScreen({
 
   return (
     <View style={styles.container}>
+      <Modal visible={contextModalIsVisible} transparent>
+        <ChangeContext
+          visible={contextModalIsVisible}
+          closeModal={() => setContextModalIsVisible(false)} />
+      </Modal>
       <Header
         customTitle='Meu HUB'
+        customRightIcon='settings-outline'
+        customRightIconSize={25}
+        customRightIconClick={() => setContextModalIsVisible(true)}
         customLeftIconSize={25}
         customLeftIcon='power-outline'
         customLeftIconClick={() => {
@@ -131,7 +150,7 @@ export default function HubScreen({
             <OptionButton
               icon='book'
               text='Boletim Geral'
-              onClick={() => undefined}
+              onClick={() => navigation.navigate('Reports')}
             />
           </View>
         </View>

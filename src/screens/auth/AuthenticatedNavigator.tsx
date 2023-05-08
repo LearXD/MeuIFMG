@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import { useState } from 'react';
 
 import AuthenticatedContext from '../../contexts/AuthenticatedContext';
 import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useRoute } from '@react-navigation/native';
 import HubScreen from '../content/HubScreen';
-import Header from '../../components/screens/Header';
 import GradesScreen from '../content/GradesScreen';
 import { Modal } from 'react-native';
 import LoadingModal from '../../components/screens/LoadingModal';
+import ReportScreen from '../content/ReportsScreen';
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -28,7 +28,7 @@ export default function AuthenticatedNavigation({
   const { params } = useRoute();
   const [token] = useState((params as Params)?.token ?? '')
 
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [loadingMessage, setLoadingMessage] = useState<string>('Carregando...');
 
   const startLoading = (message: string) => {
@@ -71,9 +71,15 @@ export default function AuthenticatedNavigation({
               animation: "fade_from_bottom",
             }}
           />
+          <Screen
+            name="Reports"
+            component={ReportScreen}
+            options={{
+              animation: "fade_from_bottom",
+            }}
+          />
         </Navigator>
       </AuthenticatedContext.Provider >
     </>
-
   )
 }

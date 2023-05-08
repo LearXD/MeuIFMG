@@ -38,14 +38,12 @@ const styles = StyleSheet.create({
 
 interface Props {
   title: string;
-  desciption: string;
   onClick: () => void;
   icon: string;
 }
 
 export default function FilterListItem({
   title,
-  desciption,
   icon,
   onClick
 }: Props) {
@@ -58,9 +56,6 @@ export default function FilterListItem({
       <View style={styles.textsContainer}>
         <Text style={styles.title}>
           {title}
-        </Text>
-        <Text style={styles.subTitle}>
-          {desciption}
         </Text>
       </View>
       <View style={styles.iconContainer}>

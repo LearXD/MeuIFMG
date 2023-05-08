@@ -1,9 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import React from 'react'
 import theme from '../../utils/theme';
 import { useRoute } from '@react-navigation/native';
 
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const styles = StyleSheet.create({

@@ -1,5 +1,4 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
 import theme from '../../../utils/theme'
 
 const styles = StyleSheet.create({
@@ -116,4 +115,3 @@ const Value = (
 
   </View>
 )
-

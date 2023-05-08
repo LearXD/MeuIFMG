@@ -8,7 +8,6 @@ import changeNavigationBarColor from "react-native-navigation-bar-color";
 import { useEffect } from "react";
 import AuthenticatedNavigation from "./auth/AuthenticatedNavigator";
 
-
 const { Navigator, Screen } = createNativeStackNavigator();
 
 export default () => {
@@ -59,7 +58,5 @@ export default () => {
         </NavigationContainer>
       </SafeAreaView>
     </>
-
-
   )
 }

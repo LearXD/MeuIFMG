@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, useWindowDimensions, StatusBar, StatusBarStyle } from 'react-native'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react';
 import theme from '../../utils/theme'
 
 import Logo from '../../assets/svg/logo.svg'
@@ -34,7 +34,6 @@ export default function SplashScreen({
         index: 0,
         routes: [{ name: 'Login' }],
       });
-      //navigation.navigate('Login')
     }, 2000)
   }, [])
 

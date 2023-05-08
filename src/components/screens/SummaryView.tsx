@@ -1,5 +1,4 @@
 import { View, StyleSheet, Text } from 'react-native'
-import React from 'react'
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import theme from '../../utils/theme';
@@ -13,9 +12,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 25,
-    fontWeight: 'bold',
     color: theme.text,
-    fontFamily: 'Montserrat-Regular',
+    fontFamily: 'Montserrat-Bold',
     textAlign: 'center'
   },
   subTitle: {
