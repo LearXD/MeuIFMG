@@ -1,6 +1,7 @@
 import { View, StyleSheet, Image, Modal, Pressable, Dimensions } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import theme from '../../../utils/theme';
+import Animated, { interpolate, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 const { width } = Dimensions.get('window')
 
@@ -24,9 +25,34 @@ export default function Picture({
   image
 }: Props) {
 
-
   const [modalVisible, setModalVisible] = React.useState(false);
   const imageReference = image ? { uri: image } : require('../../../assets/images/learxd.jpg')
+
+  const imageSize = useSharedValue(0);
+
+  const imageStyle = useAnimatedStyle(() => {
+    return {
+      width: imageSize.value,
+      height: imageSize.value,
+      //transform: [
+      //  {
+      //    rotate: interpolate(
+      //      imageSize.value,
+      //      [width * 0.20, width * 0.95],
+      //      [0, 360]
+      //    ) + 'deg'
+      //  }
+      //],
+    }
+  })
+
+  useEffect(() => {
+    if (modalVisible) {
+      imageSize.value = withTiming(width * 0.95, { duration: 1200 })
+    } else {
+      imageSize.value = 0.20
+    }
+  }, [modalVisible])
 
   return (
     <View style={styles.container}>
@@ -42,11 +68,8 @@ export default function Picture({
             justifyContent: 'center',
             backgroundColor: 'rgba(0,0,0,0.5)'
           }}>
-          <Image
-            style={{
-              width: width * 0.90,
-              height: width * 0.90,
-            }}
+          <Animated.Image
+            style={imageStyle}
             source={imageReference}
           />
         </Pressable>

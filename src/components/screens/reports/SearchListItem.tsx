@@ -51,7 +51,7 @@ export default function SearchListItem({
   )
 }
 
-const KeyValueView = ({ name, value, rounded }: { name: string; value: string; rounded?: boolean }) => {
+const KeyValueView = ({ name = "", value = "N/D", rounded = false }: { name: string; value: string; rounded?: boolean }) => {
   return (
     <View style={{
       flexDirection: 'row',

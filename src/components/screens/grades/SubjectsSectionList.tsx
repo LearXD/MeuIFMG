@@ -16,10 +16,33 @@ export interface Props {
 export default function SubjectSectionList({
   sections
 }: Props) {
+  console.log(sections)
 
 
   const parseSections = () => {
     const newSections = sections.map((semester: any) => {
+
+      if (!semester.activities.find((activity: any) => activity.name === 'Nota final do Trimestre')) {
+        let total = 0;
+        let sum = 0;
+
+        semester.activities.forEach((activity: any) => {
+          if (activity.value && activity.note) {
+            total += parseFloat(activity.value.replace(/,/g, '.'));
+            sum += parseFloat(activity.note.replace(/,/g, '.'));
+          }
+        })
+
+        semester.activities.push({
+          name: 'Nota final do Trimestre',
+          note: sum,
+          value: total,
+        })
+
+        console.log(sum)
+      }
+
+
       return {
         title: semester.role,
         data: semester.activities

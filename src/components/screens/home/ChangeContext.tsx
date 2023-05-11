@@ -92,7 +92,6 @@ export default function ChangeContext(props: Props) {
         }}
         onMessage={(event) => {
           if (event.nativeEvent.data) {
-            console.log(JSON.parse(event.nativeEvent.data))
             setOptions(JSON.parse(event.nativeEvent.data))
             return;
           }

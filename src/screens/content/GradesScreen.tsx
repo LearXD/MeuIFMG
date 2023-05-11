@@ -1,4 +1,4 @@
-import { View, StyleSheet, Modal } from 'react-native'
+import { View, StyleSheet, Modal, Text } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import theme from '../../utils/theme';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -141,6 +141,13 @@ export default function GradesScreen({
             )) + `\n\nAproveitamento de: ${Math.round(achievement * 100)}%`
           }
         />
+        <Text style={{
+          color: theme.textSecondary,
+          fontSize: 10,
+          fontFamily: 'Poppins-Regular'
+        }}>
+          Se as materias presentes não forem de seu respectivo ano letivo, volte a tela anterior e clique na engrenagem para alterar o ano letivo.
+        </Text>
         <FilterList
           sectionName={`Matérias (${data.length})`}
           onItemClick={openModal}

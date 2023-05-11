@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   sectionText: {
     color: theme.text,
     fontSize: 18,
-    fontWeight: 'bold',
+
     fontFamily: 'Montserrat-Bold'
   },
   flatList: {
@@ -39,10 +39,10 @@ export default function FilterList({
   dataState
 }: Props) {
 
-  const [alphabetical, setAlphabetical] = useState<boolean>(true);
+  const [alphabetical, setAlphabetical] = useState<boolean | null>(null);
   const [data, setData] = dataState;
 
-  useEffect(() => {
+  const filter = () => {
     let filterData = [...data];
     filterData.sort((a, b) => {
       if (alphabetical) {
@@ -55,7 +55,14 @@ export default function FilterList({
       return 0;
     })
     setData(filterData);
-  }, [alphabetical])
+  }
+
+  useEffect(() => {
+    if (alphabetical === null && data.length > 0) {
+      setAlphabetical(true)
+    }
+  }, [data])
+  useEffect(filter, [alphabetical])
 
   return (
     <View style={styles.container}>

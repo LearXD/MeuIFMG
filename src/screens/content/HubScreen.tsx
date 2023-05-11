@@ -133,22 +133,23 @@ export default function HubScreen({
             fontSize: 20,
             fontFamily: 'Montserrat-Bold',
           }}>
-            Painel de controle</Text>
+            Painel de controle
+          </Text>
           <View style={{ flex: 1 }}>
             <OptionButton
-              icon='folder'
+              icon='scroll'
               text='Avaliações'
               onClick={() => navigation.navigate('Grades')}
             />
           </View>
           <View style={{ flex: 1, gap: 10, flexDirection: 'row' }}>
             <OptionButton
-              icon='clock'
+              icon='history'
               text='Faltas'
               onClick={() => undefined}
             />
             <OptionButton
-              icon='book'
+              icon='paste'
               text='Boletim Geral'
               onClick={() => navigation.navigate('Reports')}
             />

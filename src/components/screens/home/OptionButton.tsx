@@ -1,7 +1,11 @@
-import { Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity, useWindowDimensions } from 'react-native';
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import theme from './../../../utils/theme';
+
+import Animated, { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
+
+const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 
 const styles = StyleSheet.create({
   container: {
@@ -10,11 +14,14 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
+    borderBottomColor: "#1A5723",
+    borderBottomWidth: 5,
+    //borderRightColor: "#1A5723",
+    //borderRightWidth: 5,
   },
   text: {
     color: theme.text,
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: 17,
     textAlign: 'center',
     marginTop: 10,
     fontFamily: 'Montserrat-Regular'
@@ -32,22 +39,46 @@ export default function OptionButton({
   text,
   onClick
 }: Props) {
+
+  const { width } = useWindowDimensions();
+
+  const borderWidth = useSharedValue(styles.container.borderBottomWidth)
+  const borderColor = useSharedValue(styles.container.borderBottomColor)
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      borderBottomColor: borderColor.value,
+      borderBottomWidth: borderWidth.value,
+      //borderRightColor: borderColor.value,
+      //borderRightWidth: borderWidth.value,
+    }
+  })
+
   return (
-    <TouchableOpacity
+    <AnimatedTouchableOpacity
       activeOpacity={0.7}
       onPress={onClick}
-      style={styles.container}>
+      onPressIn={() => {
+        // change the border color to primary
+        borderWidth.value = 0;
+        borderColor.value = theme.primary;
+      }}
+      onPressOut={() => {
+        borderWidth.value = styles.container.borderBottomWidth;
+        borderColor.value = styles.container.borderBottomColor;
+      }}
+      style={[styles.container, animatedStyle]}>
       <>
         <FontAwesome5
           name={icon}
           solid
-          size={70}
+          size={width * 0.18}
           color={theme.text}
         />
         <Text style={styles.text}>
           {text}
         </Text>
       </>
-    </TouchableOpacity>
+    </AnimatedTouchableOpacity>
   )
 }

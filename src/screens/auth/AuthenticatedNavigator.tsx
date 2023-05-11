@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import AuthenticatedContext from '../../contexts/AuthenticatedContext';
 import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useRoute } from '@react-navigation/native';
 import HubScreen from '../content/HubScreen';
 import GradesScreen from '../content/GradesScreen';
-import { Modal } from 'react-native';
+import { Modal, Alert } from 'react-native';
 import LoadingModal from '../../components/screens/LoadingModal';
 import ReportScreen from '../content/ReportsScreen';
 
@@ -24,6 +24,17 @@ interface Params {
 export default function AuthenticatedNavigation({
   navigation
 }: Props) {
+
+  useEffect(() => {
+    const sessionTimer = setTimeout(() => {
+      Alert.alert('Sessão expirada', 'Sua sessão expirou, faça login novamente', [
+        { text: 'Ok', onPress: () => navigation.navigate('Login') }
+      ])
+    }, 1000 * 60 * 10)
+    return () => {
+      clearTimeout(sessionTimer)
+    }
+  }, [])
 
   const { params } = useRoute();
   const [token] = useState((params as Params)?.token ?? '')
