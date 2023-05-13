@@ -16,8 +16,6 @@ export interface Props {
 export default function SubjectSectionList({
   sections
 }: Props) {
-  console.log(sections)
-
 
   const parseSections = () => {
     const newSections = sections.map((semester: any) => {
@@ -38,8 +36,6 @@ export default function SubjectSectionList({
           note: sum,
           value: total,
         })
-
-        console.log(sum)
       }
 
 

@@ -8,6 +8,7 @@ import GradesScreen from '../content/GradesScreen';
 import { Modal, Alert } from 'react-native';
 import LoadingModal from '../../components/screens/LoadingModal';
 import ReportScreen from '../content/ReportsScreen';
+import AbsencesScreen from '../content/AbsencesScreen';
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -85,6 +86,13 @@ export default function AuthenticatedNavigation({
           <Screen
             name="Reports"
             component={ReportScreen}
+            options={{
+              animation: "fade_from_bottom",
+            }}
+          />
+          <Screen
+            name="Absences"
+            component={AbsencesScreen}
             options={{
               animation: "fade_from_bottom",
             }}

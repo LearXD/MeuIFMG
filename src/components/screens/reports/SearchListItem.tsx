@@ -42,6 +42,10 @@ export default function SearchListItem({
           value={data.data["Situação"]}
         />
         <KeyValueView
+          name="Faltas"
+          value={data.data["Faltas"]}
+        />
+        <KeyValueView
           name="Nota Final"
           value={data.data.Nota}
           rounded

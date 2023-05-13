@@ -143,11 +143,11 @@ export default function HubScreen({
             />
           </View>
           <View style={{ flex: 1, gap: 10, flexDirection: 'row' }}>
-            <OptionButton
+            {/* <OptionButton
               icon='history'
               text='Faltas'
               onClick={() => undefined}
-            />
+            /> */}
             <OptionButton
               icon='paste'
               text='Boletim Geral'
