@@ -20,10 +20,13 @@
 <img style='width: 120px' src='./images/historic_modal.png'/>
 </div>
 
-# Instalação
+# 💾 Instalação
 Vá em [Releases](https://github.com/LearXD/MeuIFMG/releases) e baixe o APK mais recente do aplicativo.
 
-# Compilação do APP
+# ⚠ Aviso
+A aplicação depende de um servidor *Back-End*. Acesse [aqui](https://github.com/LearXD/MeuIFMGApi) o codigo fonte do servidor, também desenvolvido por nós.
+
+# 🔨 Compilação do APP
 ```bash
 # Clone este repositório
 $ git clone https://github.com/LearXD/MeuIFMG
@@ -45,7 +48,7 @@ $ npm run start
 $ npm run android
 ```
 
-# Tecnologias Utilizadas
+# 👨‍💻 Tecnologias Utilizadas
 
 - [React Native](https://reactnative.dev/)
 - [NodeJS](https://nodejs.org/en/)
@@ -55,7 +58,7 @@ $ npm run android
 - [React Native Gesture Handler](https://docs.swmansion.com/react-native-gesture-handler/)
 - [Outras bibliotecas](./package.json)
 
-# Creditos
+# 🎨 Creditos
 
 Projeto de Pesquisa desenvolvido por:
 
@@ -65,4 +68,4 @@ Projeto de Pesquisa desenvolvido por:
 | Gustavo Rhemann Mendonça      | Designer UI/UX          |
 | Arthur Caio Vargas e Pinto    | Orientador              |
 
-Campus: IFMG - Campus Itabirito
+Campus: IFMG - Campus Avançado de Itabirito
