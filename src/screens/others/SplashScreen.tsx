@@ -57,7 +57,7 @@ export default function SplashScreen({
         routes: [{ name: 'Login' }],
       });
     }
-    setInterval(tryConnect, 2000);
+    setTimeout(tryConnect, 2000);
   }, [])
 
   return (
