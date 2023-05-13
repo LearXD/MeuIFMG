@@ -6,7 +6,8 @@
 <br>
 <div align="center">
 
-[![Video de demonstração](https://img.youtube.com/vi/XvmD_Gankm4/0.jpg)](https://www.youtube.com/watch?v=XvmD_Gankm4 "Video de demonstração")
+[![YouTube](https://img.shields.io/badge/Video%20De%20Demonstração-%23FF0000.svg?logo=YouTube&logoColor=white)](https://www.youtube.com/watch?v=XvmD_Gankm4) 
+
 
 <img style='width: 120px' src='./images/splash_screen.png'/>
 <img style='width: 120px' src='./images/login.png'/>
@@ -52,7 +53,7 @@ $ npm run android
 - [React Native Vector Icons](https://github.com/oblador/react-native-vector-icons)
 - [React Native Reanimated](https://docs.swmansion.com/react-native-reanimated/)
 - [React Native Gesture Handler](https://docs.swmansion.com/react-native-gesture-handler/)
-- [package.json](./package.json)
+- [Outras bibliotecas](./package.json)
 
 # Creditos
 
