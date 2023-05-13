@@ -20,7 +20,10 @@ export default function SubjectSectionList({
   const parseSections = () => {
     const newSections = sections.map((semester: any) => {
 
-      if (!semester.activities.find((activity: any) => activity.name === 'Nota final do Trimestre')) {
+      if (
+        semester.activities &&
+        !semester.activities.find((activity: any) => activity.name === `Nota final de ${semester.role}`)
+      ) {
         let total = 0;
         let sum = 0;
 
@@ -31,11 +34,14 @@ export default function SubjectSectionList({
           }
         })
 
-        semester.activities.push({
-          name: 'Nota final do Trimestre',
-          note: sum,
-          value: total,
-        })
+        if (total > 0 && sum) {
+          semester.activities.push({
+            name: `Nota final de ${semester.role}`,
+            note: sum,
+            value: total,
+          })
+        }
+
       }
 
 

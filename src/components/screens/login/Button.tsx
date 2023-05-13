@@ -38,8 +38,16 @@ export default function Button({
   return (
     <TouchableOpacity
       activeOpacity={0.8}
-      style={style.container}
+      style={[
+        style.container,
+        {
+          opacity: loading ? 0.7 : 1
+        }
+      ]}
       onPress={() => {
+        if (loading) {
+          return;
+        }
         if (isLoading) {
           setLoading(true)
         }

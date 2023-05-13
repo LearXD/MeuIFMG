@@ -45,13 +45,17 @@ export default function FilterList({
   const filter = () => {
     let filterData = [...data];
     filterData.sort((a, b) => {
+      const letherA = a.subject.split(' ')[0]
+      const letherB = b.subject.split(' ')[0]
+
       if (alphabetical) {
-        if (a.subject < b.subject) { return -1; }
-        if (a.subject > b.subject) { return 1; }
+        if (letherA < letherB) return -1;
+        if (letherA > letherB) return 1;
         return 0;
       }
-      if (a.subject > b.subject) { return -1; }
-      if (a.subject < b.subject) { return 1; }
+
+      if (letherA > letherB) return -1;
+      if (letherA < letherB) return 1;
       return 0;
     })
     setData(filterData);

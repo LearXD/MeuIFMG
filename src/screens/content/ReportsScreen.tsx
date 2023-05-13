@@ -42,11 +42,6 @@ export default function ReportScreen({
       const stopLoading = loading.start("Carregando boletins...")
       const response = await reports(token)
 
-      if (response.data.error) {
-        stopLoading()
-        return console.log(response.data.error)
-      }
-
       if (response.data) {
         setData(response.data)
         stopLoading();

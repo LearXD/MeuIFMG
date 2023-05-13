@@ -67,6 +67,7 @@ export default function LoginScreen({
       .then((value) => {
         const [[_1, registration], [_2, password]] = value;
         if (registration && password) {
+          ToastAndroid.show('Sua sessão foi restaurada!', ToastAndroid.SHORT);
           setRegistration(registration);
           setPassword(password);
         }
@@ -100,7 +101,7 @@ export default function LoginScreen({
           return;
         }
 
-        console.log(loginResponse.data.token)
+        //console.log(loginResponse.data.token)
 
         await AsyncStorge.multiSet([
           ['@registration', registration],

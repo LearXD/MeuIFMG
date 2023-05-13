@@ -54,7 +54,7 @@ export default function GradesScreen({
   useEffect(() => {
     (async () => {
 
-      const stopLoading = loading.start('Carregando notas...');
+      const stopLoading = loading.start('Analisando todas suas notas... (aguarde um pouco)');
       const grades: any = await listGrades(token);
 
       let totalActivities = 0;

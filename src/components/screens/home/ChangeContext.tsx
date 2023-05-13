@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
     borderColor: theme.primary,
     borderWidth: 1,
     backgroundColor: theme.background,
-    gap: 10,
-    padding: 10,
+    gap: 15,
+    padding: 20,
   }
 })
 
@@ -63,7 +63,7 @@ export default function ChangeContext(props: Props) {
           .querySelectorAll('a')[${index}]
           .click();
       `)
-      ToastAndroid.show('Ano letivo alterado', ToastAndroid.SHORT)
+      ToastAndroid.show('Alterando...', ToastAndroid.SHORT)
     }
   }
 
@@ -75,6 +75,7 @@ export default function ChangeContext(props: Props) {
         onLoadEnd={(event) => {
           if (event.nativeEvent.url && event.nativeEvent.url !== contextUrl) {
             props.closeModal()
+            ToastAndroid.show('Ano letivo alterado!', ToastAndroid.SHORT)
             return;
           }
           if (webView.current) {
@@ -126,23 +127,24 @@ export default function ChangeContext(props: Props) {
           </Text>
           {options.length > 0 ? (
             options.map((e, i) => (
-              <View key={i} style={{
+              <TouchableOpacity key={i} style={{
                 padding: 10,
-                borderColor: theme.primary,
+                backgroundColor: theme.primary,
                 borderWidth: 1,
                 borderRadius: 5,
-              }}>
+              }}
+                onPress={() => selectOption(i)}>
                 <Text
                   style={{
-                    color: theme.textSecondary,
+                    color: theme.text,
                     fontSize: 14,
                     fontFamily: 'Montserrat-Regular',
                     textAlign: 'center'
                   }}
-                  onPress={() => selectOption(i)}>
+                >
                   {e}
                 </Text>
-              </View>
+              </TouchableOpacity>
             ))
           ) : (
             <ActivityIndicator
@@ -150,7 +152,7 @@ export default function ChangeContext(props: Props) {
                 paddingVertical: 10
               }}
               color={theme.primary}
-              size={30}
+              size={40}
             />
           )}
         </View>

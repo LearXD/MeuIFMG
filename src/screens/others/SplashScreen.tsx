@@ -1,4 +1,5 @@
-import { View, Text, StyleSheet, useWindowDimensions, StatusBar, StatusBarStyle } from 'react-native'
+import { View, Text, StyleSheet, useWindowDimensions, StatusBar, StatusBarStyle, Alert, BackHandler } from 'react-native'
+import NetInfo from '@react-native-community/netinfo'
 import { useEffect } from 'react';
 import theme from '../../utils/theme'
 
@@ -29,12 +30,34 @@ export default function SplashScreen({
   const { height } = useWindowDimensions()
 
   useEffect(() => {
-    setTimeout(() => {
+    const tryConnect = async () => {
+      const networkState = await NetInfo.fetch();
+
+      if (!networkState.isConnected) {
+        return Alert.alert('Erro de Internet', 'Para usar o aplicativo você precisa estar conectado a internet.',
+          [
+            {
+              text: "Reconectar",
+              onPress: () => {
+                tryConnect()
+              }
+            },
+            {
+              text: "Sair",
+              onPress: () => {
+                BackHandler.exitApp();
+              },
+              style: 'cancel'
+            }
+          ])
+      }
+
       navigation.reset({
         index: 0,
         routes: [{ name: 'Login' }],
       });
-    }, 2000)
+    }
+    tryConnect();
   }, [])
 
   return (

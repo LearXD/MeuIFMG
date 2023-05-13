@@ -1,7 +1,8 @@
 import { View, StyleSheet, Image, Modal, Pressable, Dimensions } from 'react-native'
 import React, { useEffect } from 'react'
 import theme from '../../../utils/theme';
-import Animated, { interpolate, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const { width } = Dimensions.get('window')
 
@@ -26,7 +27,6 @@ export default function Picture({
 }: Props) {
 
   const [modalVisible, setModalVisible] = React.useState(false);
-  const imageReference = image ? { uri: image } : require('../../../assets/images/learxd.jpg')
 
   const imageSize = useSharedValue(0);
 
@@ -34,15 +34,6 @@ export default function Picture({
     return {
       width: imageSize.value,
       height: imageSize.value,
-      //transform: [
-      //  {
-      //    rotate: interpolate(
-      //      imageSize.value,
-      //      [width * 0.20, width * 0.95],
-      //      [0, 360]
-      //    ) + 'deg'
-      //  }
-      //],
     }
   })
 
@@ -70,27 +61,38 @@ export default function Picture({
           }}>
           <Animated.Image
             style={imageStyle}
-            source={imageReference}
+            source={{ uri: image }}
           />
         </Pressable>
-
       </Modal>
       <Pressable
-        onPress={() => setModalVisible(true)}
+        onPress={() => image && setModalVisible(true)}
         style={{
           width: '100%',
           height: '100%',
           alignItems: 'center',
           justifyContent: 'center',
         }}>
-        <Image
-          style={{
-            width: '95%',
-            height: '95%',
-            borderRadius: (width * 0.60) / 2,
-          }}
-          source={imageReference}
-        />
+        {
+          image ? (
+            <Image
+              style={{
+                width: '95%',
+                height: '95%',
+                borderRadius: (width * 0.60) / 2,
+              }}
+              source={{ uri: image }}
+            />
+          ) : (
+            <FontAwesome5
+              name='user-alt-slash'
+              size={width * 0.30}
+
+              color={theme.textSecondary}
+            />
+          )
+        }
+
       </Pressable>
 
     </View>

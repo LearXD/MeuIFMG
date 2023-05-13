@@ -51,7 +51,7 @@ export default function HubScreen({
           navigation.goBack();
           return true;
         }
-        Alert.alert('Sair', 'Deseja realmente sair?', [
+        Alert.alert('Sair', 'Deseja realmente sair do aplicativo?', [
           { text: 'Não', style: 'cancel' },
           { text: 'Sim', onPress: () => BackHandler.exitApp() }
         ])
@@ -90,7 +90,7 @@ export default function HubScreen({
         customLeftIconSize={25}
         customLeftIcon='power-outline'
         customLeftIconClick={() => {
-          Alert.alert('Sair', 'Deseja realmente sair?', [
+          Alert.alert('Sair', 'Deseja realmente fazer log-off? \n* Isso apagará seus dados de login automático!', [
             { text: 'Não', style: 'cancel' },
             {
               text: 'Sim', onPress: async () => {
