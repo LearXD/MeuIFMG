@@ -106,9 +106,10 @@ export default function HubScreen({
           ])
         }}
       />
+
       <View style={styles.contents}>
         <View style={{
-          width: '100%',
+          flex: 1,
           alignItems: 'center',
           gap: 15
         }}>
@@ -135,25 +136,24 @@ export default function HubScreen({
           }}>
             Painel de controle
           </Text>
-          <View style={{ flex: 1 }}>
-            <OptionButton
-              icon='scroll'
-              text='Avaliações'
-              onClick={() => navigation.navigate('Grades')}
-            />
+          <View style={{ flex: 1, gap: 10 }}>
+            <View style={{ flex: 1 }}>
+              <OptionButton
+                icon='scroll'
+                text='Avaliações'
+                onClick={() => navigation.navigate('Grades')}
+              />
+            </View>
+            <View style={{ flex: 1 }}>
+              <OptionButton
+                icon='paste'
+                text='Boletim Geral'
+                onClick={() => navigation.navigate('Reports')}
+              />
+            </View>
+
           </View>
-          <View style={{ flex: 1, gap: 10, flexDirection: 'row' }}>
-            {/* <OptionButton
-              icon='history'
-              text='Faltas'
-              onClick={() => undefined}
-            /> */}
-            <OptionButton
-              icon='paste'
-              text='Boletim Geral'
-              onClick={() => navigation.navigate('Reports')}
-            />
-          </View>
+
         </View>
       </View>
 

@@ -23,17 +23,18 @@ const styles = StyleSheet.create({
   },
   flatList: {
     gap: 10,
-    marginBottom: 40,
   }
 })
 
 interface Props {
+  header?: JSX.Element;
   sectionName: string;
   onItemClick: (subject: string) => void;
   dataState: any;
 }
 
 export default function FilterList({
+  header,
   sectionName,
   onItemClick,
   dataState
@@ -70,25 +71,31 @@ export default function FilterList({
 
   return (
     <View style={styles.container}>
-      <View style={styles.sectionContainer}>
-        <Text style={styles.sectionText}>{sectionName}</Text>
-        <TouchableOpacity
-          onPress={() => setAlphabetical(!alphabetical)}
-          activeOpacity={0.7}
-          style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-          <FontAwesome5
-            name={alphabetical ? 'sort-alpha-down' : 'sort-alpha-down-alt'}
-            color={theme.text}
-            size={25}
-          />
-        </TouchableOpacity>
 
-      </View>
       <View>
         <FlatList
+          showsVerticalScrollIndicator={false}
+          ListHeaderComponent={
+            <View style={{ gap: 10, paddingVertical: 20 }}>
+              {header}
+              <View style={styles.sectionContainer}>
+                <Text style={styles.sectionText}>{sectionName}</Text>
+                <TouchableOpacity
+                  onPress={() => setAlphabetical(!alphabetical)}
+                  activeOpacity={0.7}
+                  style={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <FontAwesome5
+                    name={alphabetical ? 'sort-alpha-down' : 'sort-alpha-down-alt'}
+                    color={theme.text}
+                    size={25}
+                  />
+                </TouchableOpacity>
+
+              </View>
+            </View>}
           ItemSeparatorComponent={
             () => <View style={{ height: 15 }} />
           }

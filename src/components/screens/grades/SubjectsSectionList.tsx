@@ -28,16 +28,16 @@ export default function SubjectSectionList({
         let sum = 0;
 
         semester.activities.forEach((activity: any) => {
-          if (activity.value && activity.note) {
+          if (activity.value && activity.grade) {
             total += parseFloat(activity.value.replace(/,/g, '.'));
-            sum += parseFloat(activity.note.replace(/,/g, '.'));
+            sum += parseFloat(activity.grade.replace(/,/g, '.'));
           }
         })
 
         if (total > 0 && sum) {
           semester.activities.push({
             name: `Nota final de ${semester.role}`,
-            note: sum,
+            grade: sum,
             value: total,
           })
         }

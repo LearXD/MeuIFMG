@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text } from 'react-native'
+import { View, StyleSheet, Text, StyleProp, ViewStyle } from 'react-native'
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import theme from '../../utils/theme';
@@ -25,18 +25,20 @@ const styles = StyleSheet.create({
 })
 
 interface Props {
+  style?: StyleProp<ViewStyle>
   icon: string;
   title: string;
   subtitle: string;
 }
 
 export default function SummaryView({
+  style,
   icon,
   title,
   subtitle
 }: Props) {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <FontAwesome5
         name={icon}
         solid

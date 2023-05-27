@@ -24,7 +24,8 @@ const styles = StyleSheet.create({
     fontSize: 17,
     textAlign: 'center',
     marginTop: 10,
-    fontFamily: 'Montserrat-Regular'
+    fontFamily: 'Montserrat-Regular',
+    overflow: 'hidden'
   }
 });
 
@@ -40,7 +41,7 @@ export default function OptionButton({
   onClick
 }: Props) {
 
-  const { width } = useWindowDimensions();
+  const { height } = useWindowDimensions();
 
   const borderWidth = useSharedValue(styles.container.borderBottomWidth)
   const borderColor = useSharedValue(styles.container.borderBottomColor)
@@ -70,9 +71,10 @@ export default function OptionButton({
       style={[styles.container, animatedStyle]}>
       <>
         <FontAwesome5
+          style={{ overflow: 'scroll' }}
           name={icon}
           solid
-          size={width * 0.18}
+          size={height * 0.08}
           color={theme.text}
         />
         <Text style={styles.text}>

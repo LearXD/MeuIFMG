@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
   contents: {
     flex: 1,
     paddingHorizontal: 20,
-    paddingTop: 20,
     gap: 20
   }
 });
@@ -78,7 +77,7 @@ export default function GradesScreen({
               continue;
             }
             info.activities++
-            const fixedGrade = parseFloat(activity.note.replace(/,/g, "."))
+            const fixedGrade = parseFloat(activity.grade.replace(/,/g, "."))
             const fixedValue = parseFloat(activity.value.replace(/,/g, "."))
             if (fixedGrade < (fixedValue * 0.6)) {
               info.underAverage++
@@ -127,28 +126,34 @@ export default function GradesScreen({
       />
 
       <View style={styles.contents}>
-        <SummaryView
-          icon={
-            achievement >= 0.8 ? 'smile-beam' : (
-              achievement >= 0.6 ? 'smile' : 'meh'
-            )
-          }
-          title='Resumo'
-          subtitle={
-            (achievement >= 0.8 ? 'Parabéns, seu aproveitamento está otimo. Continue assim!' : (
-              achievement >= 0.6 ? 'Você pode melhorar, mas não está tão ruim assim!' :
-                'Você precisa melhorar, mas não desanime!'
-            )) + `\n\nAproveitamento de: ${Math.round(achievement * 100)}%`
-          }
-        />
-        <Text style={{
-          color: theme.textSecondary,
-          fontSize: 10,
-          fontFamily: 'Poppins-Regular'
-        }}>
-          Se as materias presentes não forem de seu respectivo ano letivo, volte a tela anterior e clique na engrenagem para alterar o ano letivo.
-        </Text>
+
         <FilterList
+          header={
+            <>
+              <SummaryView
+                //style={{ marginTop: 20 }}
+                icon={
+                  achievement >= 0.8 ? 'smile-beam' : (
+                    achievement >= 0.6 ? 'smile' : 'meh'
+                  )
+                }
+                title='Resumo'
+                subtitle={
+                  (achievement >= 0.8 ? 'Parabéns, seu aproveitamento está otimo. Continue assim!' : (
+                    achievement >= 0.6 ? 'Você pode melhorar, mas não está tão ruim assim!' :
+                      'Você precisa melhorar, mas não desanime!'
+                  )) + `\n\nAproveitamento de: ${Math.round(achievement * 100)}%`
+                }
+              />
+              <Text style={{
+                color: theme.textSecondary,
+                fontSize: 10,
+                fontFamily: 'Poppins-Regular'
+              }}>
+                Se as materias presentes não forem de seu respectivo ano letivo, volte a tela anterior e clique na engrenagem para alterar o ano letivo.
+              </Text>
+            </>
+          }
           sectionName={`Matérias (${data.length})`}
           onItemClick={openModal}
           dataState={[data, setData]}

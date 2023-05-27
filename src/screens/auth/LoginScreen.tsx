@@ -78,7 +78,7 @@ export default function LoginScreen({
     try {
 
       const validate: any = z.object({
-        registration: z.string().min(7, 'O R.A deve conter 7 digitos').max(7, 'O R.A deve conter 7 digitos'),
+        registration: z.string().min(1, 'Você precisa definir seu R.A'),
         password: z.string().min(3, 'A senha deve conter no minimo 3 digitos'),
       })
         .safeParse({

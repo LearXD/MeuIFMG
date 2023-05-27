@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
 interface Props {
   data: {
     name: string,
-    note: string,
+    grade: string,
     value: string,
     date?: string
   }
@@ -28,13 +28,13 @@ interface Props {
 export default function SubjectItem({
   data: {
     name,
-    note,
+    grade,
     value,
     date
   }
 }: Props) {
 
-  const isBelowAverage = parseFloat(note) < (parseFloat(value) * 0.6);
+  const isBelowAverage = parseFloat(grade) < (parseFloat(value) * 0.6);
 
   return (
     <View style={styles.container}>
@@ -65,7 +65,7 @@ export default function SubjectItem({
         <Value name="Valor Total:" value={value} />
         <Value
           name="Valor Obtido:"
-          value={note}
+          value={grade}
           isBelowAverage={isBelowAverage}
           arrondValue
         />
