@@ -1,4 +1,4 @@
-package br.edu.ifmg.meu;
+package dev.learxd.ifit;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

@@ -104,9 +104,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "br.edu.ifmg.meu"
+    namespace "dev.learxd.ifit"
     defaultConfig {
-        applicationId "br.edu.ifmg.meu"
+        applicationId "dev.learxd.ifit"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

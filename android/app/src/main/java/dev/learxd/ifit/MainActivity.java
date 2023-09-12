@@ -1,4 +1,4 @@
-package br.edu.ifmg.meu;
+package dev.learxd.ifit;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
