@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, useWindowDimensions, StatusBar, StatusBarStyle, Alert, BackHandler } from 'react-native'
+import { View, Text, StyleSheet, useWindowDimensions, Image, StatusBar, StatusBarStyle, Alert, BackHandler } from 'react-native'
 import NetInfo from '@react-native-community/netinfo'
 import { useEffect } from 'react';
 import theme from '../../utils/theme'
@@ -52,10 +52,7 @@ export default function SplashScreen({
           ])
       }
 
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'Login' }],
-      });
+      navigation.replace('Login')
     }
     setTimeout(tryConnect, 2000);
   }, [])
@@ -66,11 +63,13 @@ export default function SplashScreen({
         barStyle={theme.statusBarStyle as StatusBarStyle}
         backgroundColor={theme.background}
       />
-      <Logo style={{
-        height: height * 0.25,
-        width: height * 0.25,
-        alignSelf: 'center',
-      }} />
+      <Image
+        style={{
+          height: height * 0.35,
+          width: height * 0.35,
+        }}
+        source={require('../../assets/images/splash_image.png')}
+      />
       <Text style={{
         color: theme.text,
         fontSize: 10,
@@ -79,7 +78,7 @@ export default function SplashScreen({
         fontFamily: 'Montserrat-Regular',
         fontWeight: '500'
       }}>
-        POWERED BY IFMG ITABIRITO
+        POWERED BY LEARXD © {new Date(Date.now()).getFullYear()}
       </Text>
     </View>
   )

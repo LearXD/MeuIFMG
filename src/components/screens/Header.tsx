@@ -3,6 +3,8 @@ import theme from '../../utils/theme';
 import { useRoute } from '@react-navigation/native';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useContext } from 'react';
+import AuthenticatedContext from '../../contexts/AuthenticatedContext';
 
 const styles = StyleSheet.create({
   container: {
@@ -35,6 +37,7 @@ export default function Header({
   customLeftIconClick
 }: Props) {
 
+  const { token } = useContext(AuthenticatedContext) as any
   const { name } = useRoute();
 
   return (
@@ -80,7 +83,7 @@ export default function Header({
         alignItems: 'center'
       }}>
         {
-          customRightIcon && (
+          (customRightIcon && token !== "googletoken") && (
             <TouchableOpacity
               onPress={customRightIconClick}
               style={{

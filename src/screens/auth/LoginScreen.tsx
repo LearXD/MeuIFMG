@@ -1,10 +1,9 @@
-import { View, Text, StyleSheet, useWindowDimensions, KeyboardAvoidingView } from 'react-native'
+import { View, Text, StyleSheet, Image, useWindowDimensions, KeyboardAvoidingView } from 'react-native'
 import { useEffect, useState } from 'react';
 import theme from '../../utils/theme';
 
 import AsyncStorge from '@react-native-async-storage/async-storage';
 
-import Logo from '../../assets/svg/logo.svg'
 import Input from '../../components/screens/login/Input';
 import Button from '../../components/screens/login/Button';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -17,7 +16,9 @@ import CookieManager from '@react-native-cookies/cookies';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: '100%',
+    width: '100%',
+    padding: 0,
     backgroundColor: theme.background,
   },
   titleContainer: {
@@ -111,13 +112,7 @@ export default function LoginScreen({
         await CookieManager.clearAll();
         await CookieManager.setFromResponse('https://meu.ifmg.edu.br', loginResponse.data.token)
 
-        navigation.reset({
-          index: 1,
-          routes: [{
-            name: 'Authenticated',
-            params: { token: loginResponse.data.token }
-          }],
-        });
+        navigation.replace('Authenticated', { token: loginResponse.data.token });
       }
 
     } catch (error) {
@@ -128,17 +123,22 @@ export default function LoginScreen({
 
   return (
     <KeyboardAvoidingView
-      behavior="height"
+      behavior='height'
+      keyboardVerticalOffset={0}
+      enabled={false}
       style={styles.container}>
       <StatusBar
         barStyle={theme.statusBarStyle as StatusBarStyle}
         backgroundColor={theme.statusBarColor}
       />
       <View style={styles.titleContainer}>
-        <Logo style={{
-          height: '50%',
-          width: '50%'
-        }} />
+        <Image
+          style={{
+            height: height * 0.25,
+            width: height * 0.25,
+          }}
+          source={require('../../assets/images/splash_image.png')}
+        />
         <Text style={{
           color: theme.text,
           fontSize: height * 0.03,
@@ -156,7 +156,12 @@ export default function LoginScreen({
           para acessar seu painel
         </Text>
       </View>
-      <View style={styles.inputsContainer}>
+      <KeyboardAvoidingView
+        enabled={true}
+        keyboardVerticalOffset={height * 0.1}
+        behavior='padding'
+        style={styles.inputsContainer}
+      >
         <Input
           state={[registration, setRegistration]}
           title="Digite seu número de matricula:"
@@ -176,7 +181,7 @@ export default function LoginScreen({
         }}>
           Caso não lembre seu R.A, ou não possua um, entre em contato com a assistencia de seu campus!
         </Text>
-      </View>
+      </KeyboardAvoidingView>
       <View style={styles.buttonContainer}>
         <Button
           onClick={handleLogin}

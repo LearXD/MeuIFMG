@@ -7,7 +7,14 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "link": "npx react-native-asset",
+    "link-network": "adb reverse tcp:8081 tcp:8081",
+    "garbage": "TASKKILL /F /IM java.exe /T",
+    "build:apk": "cd android && gradlew assembleRelease",
+    "build:aab": "cd android && gradlew bundleRelease",
+    "install:apk": "adb install ./android/app/build/outputs/apk/release/app-release.apk",
+    "install:debug": "adb install ./android/app/build/outputs/apk/debug/app-debug.apk"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.18.1",
